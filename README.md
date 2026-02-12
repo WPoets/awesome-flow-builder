@@ -10,6 +10,8 @@ Whether you are building custom internal tools, automating multi-step data proce
 
 You will need to update the wp-config.php file with the various defines specified in _sample-config.php_, located in the samples-index folder.
 
+⚠️ Awesome Flow Builder is intended for technical teams and advanced WordPress users.
+Initial setup requires configuration in wp-config.php.
 
 ### Changelog 
 
