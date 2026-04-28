@@ -21,6 +21,8 @@ class Monoframe
 		require_once( $plugin_path . '/libraries/acf-blocks.php' );
 		require_once( $plugin_path . '/libraries/export-apps/import-export-apps.php' ); 
 		require_once( $plugin_path . '/libraries/basic-maintenance.php' ); 
+		require_once( $plugin_path . '/libraries/elementor/elementor-blocks.php' );
+		require_once( $plugin_path . '/libraries/gutenberg/gutenberg-init.php' );
 		
 	}
 		
