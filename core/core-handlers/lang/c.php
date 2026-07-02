@@ -417,7 +417,7 @@ function not_logged_in($atts,$content=null,$shortcode = array()){
 function device($atts,$content=null,$shortcode = array()){
 	$device = \aw2_library::resolve_chain($atts['device']);
 	
-	$detect = new \Mobile_Detect;
+	$detect = new \Detection\MobileDetect;
 	$device_status=false;
 	$arr= explode( ',' ,$device );
 	if($detect->isMobile() && !$detect->isTablet() && in_array('mobile',$arr) )

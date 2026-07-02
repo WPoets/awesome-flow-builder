@@ -49,6 +49,7 @@ return array(
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
     'Evenement\\' => array($vendorDir . '/evenement/evenement/src'),
     'EllipticCurve\\' => array($vendorDir . '/starkbank/ecdsa/src'),
+    'Detection\\' => array($vendorDir . '/mobiledetect/mobiledetectlib/src'),
     'DebugBar\\' => array($vendorDir . '/php-debugbar/php-debugbar/src/DebugBar'),
     'Composer\\Pcre\\' => array($vendorDir . '/composer/pcre/src'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),

@@ -37,7 +37,7 @@ define('AWE_VERSION',$plugin_data['Version']);
 
 
 
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+$myUpdateChecker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
   'https://github.com/WPoets/awesome-no-code-platform',
   __FILE__,
   'awesome-no-code-platform'
