@@ -11,7 +11,7 @@ class pdf_parser {
 	{
 		$final_attrs = null;
 		$start = false;
-	    $content = @file_get_contents($file_path, FILE_BINARY);
+	    $content = @file_get_contents($file_path);
 		
         if($give_attachments){
 			preg_match_all('/Type\/Filespec\/UF\((.*?)\)>>/', $content, $match);

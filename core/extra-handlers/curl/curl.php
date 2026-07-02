@@ -238,7 +238,9 @@ function curl_call($method, $url, $data=null, $headers=null, $proxy=null){
    }
 
    $info = curl_getinfo($curl);
-   curl_close($curl);
+   if (is_resource($curl)) {
+      curl_close($curl);
+   }
    $temp_arr=array(
 	"info"=>$info,
 	"headers"=>$headers_arr,
