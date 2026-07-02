@@ -25,6 +25,10 @@ if (!defined('AWESOME_LCNC') || AWESOME_LCNC === 'no') {
         'desc'=>null
         ), $atts) );
 
+        if ($main === null) {
+            $main = '';
+        }
+
         unset($atts['main']);
         unset($atts['desc']);
         

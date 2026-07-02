@@ -16,6 +16,9 @@ function add($atts,$content=null,$shortcode = array()){
 	unset($atts['desc']);
 	
 	$content_types=&\aw2_library::get_array_ref('content_types');
+	if ($main === null) {
+		$main = '';
+	}
 	$content_types[$main]=array();
 	$atts['content_type_def']=true;
 	$atts['content_type']=$main;

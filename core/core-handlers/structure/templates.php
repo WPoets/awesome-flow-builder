@@ -36,9 +36,9 @@ function add($atts,$content=null,$shortcode=null){
 	
 	$ref=&\aw2_library::get_array_ref('module','templates');
 
-
-
-
+	if ($main === null) {
+		$main = '';
+	}
 	
 	$ref[$main]['code']=$content;
 	$ref[$main]['name']=$main;

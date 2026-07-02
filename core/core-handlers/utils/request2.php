@@ -70,7 +70,7 @@ function get_request($main){
 		return json_encode($post);
 	}
 		
-	if(array_key_exists($main, $_REQUEST)){
+	if($main !== null && array_key_exists($main, $_REQUEST)){
 		
 		$return_value=$_REQUEST[$main];
 		

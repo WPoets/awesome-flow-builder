@@ -42,6 +42,10 @@ function register($atts, $content = null, $shortcode = array())
 		'title' => '',
 	), $atts));
 
+	if ($main === null) {
+		$main = '';
+	}
+
 	$ab = new \array_builder();
 	$arr = $ab->parse($content);
 	$registered_apps =& \aw2_library::get_array_ref('apps');
@@ -56,7 +60,7 @@ function register($atts, $content = null, $shortcode = array())
 	$app['post_id'] = '';
 	$app['hash'] = 'app:' . $main;
 
-	$app['collection'] = $arr['collection'];
+	$app['collection'] = (is_array($arr) && isset($arr['collection'])) ? $arr['collection'] : array();
 
 	$registered_apps[$main] = $app;
 	return;
