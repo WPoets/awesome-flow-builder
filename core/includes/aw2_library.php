@@ -2838,6 +2838,9 @@ static function set($key,$value,$content=null,$atts=null){
 static function set_cookie($key,$value,$overwrite='yes'){
 	//php8OK	
 	$flag=true;
+	if ($key === null) {
+		$key = '';
+	}
 	if (array_key_exists($key, $_COOKIE) && $overwrite=='no')$flag=false;
 	if (array_key_exists($key, $_COOKIE) && $_COOKIE[$key]!='' & $_COOKIE[$key]!=null & $overwrite=='empty')$flag=false;	
 	
@@ -2854,6 +2857,9 @@ static function set_cookie($key,$value,$overwrite='yes'){
 static function set_session($key,$value,$overwrite='yes'){
 	//php8OK	
 	$flag=true;
+	if ($key === null) {
+		$key = '';
+	}
 	if (!isset($_SESSION)) return;
 	if (array_key_exists($key, $_SESSION) && $overwrite=='no')$flag=false;
 	if (array_key_exists($key, $_SESSION) && $_SESSION[$key]!='' & $_SESSION[$key]!=null & $overwrite=='empty')$flag=false;
@@ -2863,6 +2869,9 @@ static function set_session($key,$value,$overwrite='yes'){
 
 static function set_option($key,$value,$overwrite='yes'){
 	//php8Amit	
+	if ($key === null) {
+		$key = '';
+	}
 	add_option( $key, $value, '', 'no' );
 }
 

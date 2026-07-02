@@ -69,6 +69,10 @@ function aw2_service_call($atts,$content=null){
 	), $atts) );
 	if($main==null)return 'Module/Template must be provided';	
 
+	if ($service === null) {
+		$service = '';
+	}
+
 	$handlers=&aw2_library::get_array_ref('handlers');
 	$handler=$handlers[$service];
 

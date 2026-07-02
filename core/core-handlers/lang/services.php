@@ -10,6 +10,10 @@ function add($atts,$content=null,$shortcode = array()){
 	'desc'=>null
 	), $atts) );
 	
+	if ($main === null) {
+		$main = '';
+	}
+
 	unset($atts['main']);
 	unset($atts['desc']);
 

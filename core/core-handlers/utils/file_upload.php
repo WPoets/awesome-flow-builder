@@ -19,6 +19,9 @@ function upload($atts,$content=null,$shortcode = array()){
 		'woo_product_gal'=>false
 	), $atts, 'aw2_upload' ) );
 	// These files need to be included as dependencies when on the front end.
+	if ($upload_element_id === null) {
+		$upload_element_id = '';
+	}
 	require_once( ABSPATH . 'wp-admin/includes/image.php' );
 	require_once( ABSPATH . 'wp-admin/includes/file.php' );
 	require_once( ABSPATH . 'wp-admin/includes/media.php' );
