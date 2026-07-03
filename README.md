@@ -6,7 +6,7 @@
 
 Awesome XP is a high-performance, low-code logic execution platform for WordPress. Designed for developers and agencies who need to build complex custom workflows without the overhead of heavy visual builders, it uses a streamlined, shortcode-based architecture to connect apps, services, and data.
 
-Whether you are building custom internal tools, automating multi-step data processing, or extending the Awesome Enterprise Platform, Awesome Flow Builder gives you the "logic rails" to move faster and stay organized.
+Whether you are building custom internal tools, automating multi-step data processing, or extending the Awesome Enterprise Platform, Awesome Flow Builder gives you the "logic rails" to move faster and stay organised.
 
 You will need to update the wp-config.php file with the various defines specified in _sample-config.php_, located in the samples-index folder.
 
@@ -15,28 +15,31 @@ Initial setup requires configuration in wp-config.php.
 
 ### Changelog 
 
+##### 1.0.5.2
+* Improved: compatibility issues with PHP 8.5
+  
 ##### 1.0.5.1
-* Fixed: compatibility issues with php 8.2+
+* Fixed: compatibility issues with PHP 8.2+
   
 ##### 1.0.4
-* Fixed: Increased the compatibitlity with PHP 8.0+
-* Fixed: Upgraded the handler dependencies to latest versions.
+* Fixed: Increased compatibility with PHP 8.0+
+* Fixed: Upgraded the handler dependencies to the latest versions.
 
 
 ##### 1.0.3
 * Improved: Added layout option to sub fields in row_repeater field, so that they look good
 * Improved: Added three new fields - post-select,taxonomy-select,filtered-post-select
-* Fixed: Remove button in repeater fields were not looking good.
+* Fixed: Remove button in repeater fields was not looking good.
 
 
 ##### 1.0.2
-* Fixed: innerblock was not allowing to select gutenberg blocks
+* Fixed: innerblock was not allowing selection of Gutenberg blocks
 * Fixed: issue with keystorkes missing text and text area fields in GT blocks.
 
 ##### 1.0.1
 * Dependency updates
-* Added missing files for introducing shortcodes to register Gutenberg and Elmentor blocks
-* Fixed the issue with utilites file.
+* Added missing files for introducing shortcodes to register Gutenberg and Elementor blocks
+* Fixed the issue with the utilities file.
 
 
 ##### 1.0.0  
