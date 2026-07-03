@@ -1,9 +1,17 @@
 <?php
 namespace aw2\gutenberg_blocks;
-\define('DGB_VERSION', '1.0.0');
-\define('DGB_PLUGIN_DIR', \plugin_dir_path(__FILE__));
-\define('DGB_PLUGIN_URL', \plugin_dir_url(__FILE__));
-\define('DGB_ASSETS_URL', DGB_PLUGIN_URL . 'assets/');
+if (!defined('DGB_VERSION')) {
+	\define('DGB_VERSION', '1.0.0');
+}
+if (!defined('DGB_PLUGIN_DIR')) {
+	\define('DGB_PLUGIN_DIR', \plugin_dir_path(__FILE__));
+}
+if (!defined('DGB_PLUGIN_URL')) {
+	\define('DGB_PLUGIN_URL', \plugin_dir_url(__FILE__));
+}
+if (!defined('DGB_ASSETS_URL')) {
+	\define('DGB_ASSETS_URL', DGB_PLUGIN_URL . 'assets/');
+}
 
 
 \add_action( 'init', 'aw2\gutenberg_blocks\register_gt_post_type', 0 );
@@ -92,7 +100,7 @@ function register_gt_post_type() {
  * Initialize the block library
  */
 function dgb_init() {
-    require_once DGB_PLUGIN_DIR . 'lib/class-block-library.php';
+    require_once __DIR__ . '/lib/class-block-library.php';
     // Initialize the library with blocks directory
     \aw2\gutenberg_blocks\dgb()->init(
         DGB_ASSETS_URL

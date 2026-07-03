@@ -5,15 +5,25 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('DGB_VERSION', '1.0.0');
-define('DGB_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('DGB_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('DGB_ASSETS_URL', DGB_PLUGIN_URL . 'assets/');
-define('DGB_BLOCKS_DIR', DGB_PLUGIN_DIR . 'blocks/');
+if (!defined('DGB_VERSION')) {
+    define('DGB_VERSION', '1.0.0');
+}
+if (!defined('DGB_PLUGIN_DIR')) {
+    define('DGB_PLUGIN_DIR', plugin_dir_path(__FILE__));
+}
+if (!defined('DGB_PLUGIN_URL')) {
+    define('DGB_PLUGIN_URL', plugin_dir_url(__FILE__));
+}
+if (!defined('DGB_ASSETS_URL')) {
+    define('DGB_ASSETS_URL', DGB_PLUGIN_URL . 'assets/');
+}
+if (!defined('DGB_BLOCKS_DIR')) {
+    define('DGB_BLOCKS_DIR', DGB_PLUGIN_DIR . 'blocks/');
+}
 
 
 // Load the library
-require_once DGB_PLUGIN_DIR . 'lib/class-block-library.php';
+require_once __DIR__ . '/lib/class-block-library.php';
 
 /**
  * Initialize the block library

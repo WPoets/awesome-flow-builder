@@ -8,9 +8,10 @@ function create_awesome_tables() {
 		$table_schema = [
 
 			"CREATE TABLE IF NOT EXISTS `awesome_exceptions` (
-				  `ID` bigint(20) NOT NULL AUTO_INCREMENT,
+				  `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 				  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
 				  `modified_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+				  `last_seen` timestamp NULL DEFAULT NULL,
 				  `exception_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 				  `message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
 				  `post_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -36,10 +37,12 @@ function create_awesome_tables() {
 				  `location` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 				  `no_of_times` int(11) DEFAULT NULL,
 				  `status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-				  PRIMARY KEY (`ID`),
-				  KEY `status` (`status`),
-				  KEY `app_name` (`app_name`),
-				  KEY `exception_type` (`exception_type`)
+				  `exception_hash` char(32) CHARACTER SET ascii GENERATED ALWAYS AS (md5(concat_ws('|',ifnull(`post_type`,''),ifnull(`source`,''),ifnull(`module`,''),ifnull(`position`,'-1'),ifnull(`errno`,''),ifnull(`errfile`,''),ifnull(`errline`,'')))) STORED,
+				  PRIMARY KEY  (`ID`),
+				  UNIQUE KEY  `uk_exception_hash` (`exception_hash`),
+				  KEY  `status` (`status`),
+				  KEY  `app_name` (`app_name`),
+				  KEY  `exception_type` (`exception_type`)
 			) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 			",
 
