@@ -346,7 +346,45 @@ class BlockLibrary
         // Merge with attributes (drop the snapshot key itself)
         $data = array_merge($attributes, $field_values);
         unset($data['_data']);
+        // Walk inner blocks to render innerblocks field content
+        if (!empty($block->parsed_block['innerBlocks'])) {
+            foreach ($block->parsed_block['innerBlocks'] as $inner_block) {
+                if ($inner_block['blockName'] !== 'dgb/field') {
+                    continue;
+                }
 
+                $attrs = $inner_block['attrs'];
+                if (empty($attrs['type']) || $attrs['type'] !== 'innerblocks') {
+                    continue;
+                }
+                if (empty($attrs['attr_name'])) {
+                    continue;
+                }
+
+                // Render the nested blocks inside this field block
+                $html = '';
+                if (!empty($inner_block['innerBlocks'])) {
+                    foreach ($inner_block['innerBlocks'] as $nested) {
+                        $html .= render_block($nested);
+                    }
+                }
+
+                // Store rendered HTML at the correct dot-notation path
+                $keys = explode('.', $attrs['attr_name']);
+                $current = &$data;
+                foreach ($keys as $i => $key) {
+                    if ($i === count($keys) - 1) {
+                        $current[$key] = $html;
+                    } else {
+                        if (!isset($current[$key]) || !is_array($current[$key])) {
+                            $current[$key] = array();
+                        }
+                        $current = &$current[$key];
+                    }
+                }
+                unset($current);
+            }
+        }
         // Enqueue block-specific assets
         $this->enqueue_block_assets($config);
 
