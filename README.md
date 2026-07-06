@@ -15,11 +15,14 @@ Initial setup requires configuration in wp-config.php.
 
 ### Changelog 
 
+##### 1.0.6.1
+1. Fixed: innerblocks fields' content was not accessible server-side.
+
 ##### 1.0.6
-1. Fixed:  for Uncaught SimpleMySQLiException: Deadlock found when trying to get lock
+1. Fixed: Uncaught SimpleMySQLiException: Deadlock found when trying to get lock
 2. Fixed: Uncaught Error: Failed opening required file
-3. Fixed:  "Using null as an array offset is deprecated; use an empty string instead"
-4. Fixed: updated the communication handler to the latest version to remove a security issue in the AWS SDK we were using
+3. Fixed: "Using null as an array offset is deprecated; use an empty string instead"
+4. Fixed: Updated the communication handler to the latest version to remove a security issue in the AWS SDK we were using
 
 
 ##### 1.0.5.2
