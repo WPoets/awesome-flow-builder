@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '882ca768ad83c734d4b14b4f6ab4b71410a11f8c',
+        'reference' => '1c813fc4d20305dc3e88b7380bb2cf0e5990589c',
         'name' => 'wpoets/awesome-enterprise-core',
         'dev' => true,
     ),
@@ -535,7 +535,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '882ca768ad83c734d4b14b4f6ab4b71410a11f8c',
+            'reference' => '1c813fc4d20305dc3e88b7380bb2cf0e5990589c',
             'dev_requirement' => false,
         ),
         'wpoets/communication-handler' => array(
