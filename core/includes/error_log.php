@@ -409,7 +409,7 @@ class aw2_error_log{
 					$mysqli->query($sql, $values, $types);
 					return $mysqli->insertId();
 
-				} catch (SimpleMySQLiException $e) {
+				} catch (Throwable $e) {
 					$mysql_errno = self::get_mysql_errno($mysqli, $e);
 
 					if (($mysql_errno === 1213 || $mysql_errno === 1205 || strpos($e->getMessage(), 'Deadlock found') !== false || strpos($e->getMessage(), 'Lock wait timeout') !== false) && $retry_count < $max_retries) {
