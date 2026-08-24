@@ -844,63 +844,117 @@ class controllers{
 		exit();	
 	}	
 	
-	static function controller_posts($o, $query){
-	
-		if(empty($o->pieces))return;
-		
-		$app=&aw2_library::get_array_ref('app');
+	static function controller_posts($o, $query)
+	{
 
-		if(isset($app['settings']['enable_cache'])){
+		if (empty($o->pieces))
+			return;
+
+		$app =& aw2_library::get_array_ref('app');
+
+		if (isset($app['settings']['enable_cache'])) {
 			self::set_cache_header($app['settings']['enable_cache']);
-		}
-		else	
-				self::set_cache_header('no'); // HTTP 1.1.
-		
+		} else
+			self::set_cache_header('no'); // HTTP 1.1.
+
 		self::set_index_header();
-		
-		if(!isset($app['collection']['posts'])) return;
-		
-		$slug= $o->pieces[0];
-	
-		$post_type = $app['collection']['posts']['post_type'];
-			
-			
-		if(!aw2_library::module_exists_in_collection($app['collection']['posts'],$slug)) return;
-			
-		array_shift($o->pieces);
+
+		if (!isset($app['collection']['posts']))
+			return;
+
+		$collection = $app['collection']['posts'];
+		$post_type = $collection['post_type'];
+
+		// Read the post type registry directly instead of is_post_type_hierarchical().
+		// Absent WP (or an unregistered / external-connection type) this is false,
+		// which means the hierarchical branch below can safely use WP functions.
+		$is_wp = defined('IS_WP') && IS_WP;
+
+		$hierarchical = $is_wp
+			&& isset($GLOBALS['wp_post_types'][$post_type])
+			&& !empty($GLOBALS['wp_post_types'][$post_type]->hierarchical);
+
+		$slug = null;
+		$final_post_slug = null;
+		$post = null;
+
+		if ($hierarchical) {
+			// module_exists_in_collection matches a single post_name, not a path,
+			// so walk pieces in reverse and match the leaf. Deepest match wins.
+			for ($i = count($o->pieces) - 1; $i >= 0; $i--) {
+				if (aw2_library::module_exists_in_collection($collection, $o->pieces[$i])) {
+					$slug = $o->pieces[$i];
+					$final_post_slug = implode('/', array_slice($o->pieces, 0, $i + 1));
+					$o->pieces = array_slice($o->pieces, $i + 1); // remainder becomes qs
+					break; // stop before the array_slice invalidates the loop index
+				}
+			}
+
+			if ($slug === null)
+				return;
+
+			// Leaf matched but the parent chain is unverified. Validate the full path
+			// so /wrong-parent/child doesn't serve the same post at an arbitrary URL.
+			$post = get_page_by_path($final_post_slug, OBJECT, $post_type);
+			if (!$post)
+				return; // bad ancestry — leave the route to the next controller
+		} else {
+			// Flat CPT (or no WP): only the first segment can be the post. No path, no loop.
+			$slug = $o->pieces[0];
+
+			if (!aw2_library::module_exists_in_collection($collection, $slug))
+				return;
+
+			$final_post_slug = $slug;
+			array_shift($o->pieces);
+
+			if ($is_wp)
+				aw2_library::get_post_from_slug($slug, $post_type, $post);
+		}
+
 		self::set_qs($o);
-		$app['active']['collection'] = $app['collection']['posts'];
-		$app['active']['module'] = $slug; // this is kept to keep this workable
-		$app['active']['controller'] = 'posts';	
+
+		$app['active']['collection'] = $collection;
+		$app['active']['module'] = $slug; // leaf, kept for backward compatibility
+		$app['active']['path'] = $final_post_slug;
+		$app['active']['controller'] = 'posts';
+
 		$output = false;
-		
-		if(isset($app['configs'])){
-			$layout='';
-			$app_config = $app['configs'];
-			
-			if(isset($app_config['layout'])){
-				$layout='layout';
-			}
-			if(isset($app_config['posts-single-layout'])){
-				$layout='posts-single-layout';
-			}
-			
-			if(!empty($layout)){
-				aw2_library::set('current_post',$post);
-				$output = aw2_library::module_run($app['collection']['config'],$layout,null,null);
+
+		if (isset($app['collection']['config'])) {
+			$layout = '';
+			$app_config = $app['collection']['config'];
+
+			if (aw2_library::module_exists_in_collection($app_config, 'layout'))
+				$layout = 'layout';
+
+			if (aw2_library::module_exists_in_collection($app_config, 'posts-single-layout'))
+				$layout = 'posts-single-layout';
+
+			if (!empty($layout)) {
+				if ($post)
+					aw2_library::set('current_post', $post);
+				$output = aw2_library::module_run($app_config, $layout, null, null);
 			}
 		}
-		
-		if($output !== false){
+
+		if ($output !== false) {
 			echo $output;
 			aw2_library::cleanup();
 			exit();
 		}
-		
-		$query->query_vars[$post_type]=$slug;
-		$query->query_vars['post_type']=$post_type;
-		$query->query_vars['name']=$slug;
-		unset($query->query_vars['error']);
+
+		unset(
+			$query->query_vars['attachment'],
+			$query->query_vars['page'],
+			$query->query_vars['error']
+		);
+
+		$query->query_vars['post_type'] = $post_type;
+
+		unset($query->query_vars['pagename']);
+		$query->query_vars[$post_type] = $final_post_slug;
+		$query->query_vars['name'] = $final_post_slug;
 
 		return;
 	}
